@@ -3,22 +3,20 @@
 
     <div class="registerForm">
       <h1 class="registerHeader">Register</h1>
-      <b-form>
-        <b-form-group id="emailLabel" label="Email address:" label-for="email" description="We'll never share your email with anyone else.">
-          <b-form-input id="email" type="email" v-model="register.email" required placeholder="Enter email">
-          </b-form-input>
-        </b-form-group>
-        <b-form-group id="nameLabel" label="Your Name:" label-for="exampleInput2">
-          <b-form-input id="name" type="text" v-model="register.name" required placeholder="Enter name">
-          </b-form-input>
-        </b-form-group>
-        <b-form-group id="passwordLabel" label="Password:" label-for="password">
-          <b-form-input id="password" type="text" v-model="register.password" required placeholder="Enter password">
-          </b-form-input>
-        </b-form-group>
-        <b-button type="submit" @click="register" variant="primary">Submit</b-button>
-        <b-button type="reset" @click="reset" variant="danger">Reset</b-button>
-      </b-form>
+      <v-form v-model="valid" ref="form" lazy-validation>
+        <v-text-field v-model="name" :rules="nameRules" :counter="20" label="Name" required></v-text-field>
+        <v-text-field v-model="email" :rules="emailRules" label="Email" required></v-text-field>
+        <v-text-field v-model="password" :rules="passwordRules" label="Password" required></v-text-field>
+        <v-text-field name="input-7-1" label="Confirm Password" v-model="confirm_password"></v-text-field>
+        <v-btn @click="submit" :disabled="!valid">Submit</v-btn>
+        <v-btn @click="clear">Clear</v-btn>
+        <v-alert :value="regSuc" type="success">
+          Registration Successful
+        </v-alert>
+        <v-alert :value="regFail" type="error">
+          Registration Error {{ msg }}
+        </v-alert>
+      </v-form>
     </div>
 
   </div>
@@ -32,31 +30,71 @@
   }
 
   .registerForm {
+      margin: auto;
+      width: 80%;
       padding: 30px;
   }
 
 </style>
 
 <script>
+import axios from 'axios';
   export default {
-    data() {
-      return {
-        register: {
-          email: '',
-          name: '',
-          password: ''
-        },
-        show: true
-      }
-    },
+    data: () => ({
+      valid: true,
+      regSuc: false,
+      regFail: false,
+      msg: '',
+      email: '',
+      name: '',
+      nameRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 20) || 'Name must be less than 20 characters'
+      ],
+      password: '',
+      passwordRules: [
+        v => !!v || 'Password is required',
+        v => (v && v.length > 7) || 'Password must be greater than 7 characters'
+      ],
+      confirm_password: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+      ],
+    }),
     methods: {
-      register() {
-          axios.post('');
+      submit () {
+        alert("clicked");
+        if (this.$refs.form.validate()) {
+          alert("clicked2");
+          return axios ({
+            data: {
+              name: this.name,
+              email: this.email,
+              password: this.password
+            },
+            method: 'post',
+            url: 'http://localhost:8081/users/register',
+            headers: {
+              'Content-type': 'application/json',
+            },
+          })
+          .then(() => {
+            this.regSuc = true;
+            const self = this;
+            setTimeout(function() {
+              self.$router.push({ name: 'Home' })
+            }, 2000);
+            
+          })
+          .catch((error) => {
+            //const msg = error.response.data.message;
+            this.regFail = true;
+          })
+        }
       },
-      reset() {
-        this.form.email = '';
-        this.form.name = '';
-        this.form.password = '';
+      clear() {
+        this.$refs.form.reset()
       }
     }
   }

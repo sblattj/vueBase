@@ -24,8 +24,12 @@
 
       </b-collapse>
     </b-navbar>
+
+    
     <!-- this routerview injects other components as children -->
-    <router-view/>
+    <v-app id="inspire">
+      <router-view/>
+    </v-app>
 
     <footer>
       <div class="text-center">
@@ -60,7 +64,7 @@
     position: fixed;
     background: darkcyan;
     color: white;
-    padding: 50px;
+    padding: 1px;
     left: 0;
     right: 0;
     bottom: 0;

@@ -28,7 +28,7 @@ module.exports.controller = (app) => {
     app.post('/users/login', (req, res) => {
         if (req.body.email && req.body.password) {
             const email = req.body.email;
-            const password = req.bdody.password;
+            const password = req.body.password;
             User.getUserByEmail(email, (err, user) => {
                 if (!user) {
                     res.status(404).json({ message: 'User does not exist' });
