@@ -2,22 +2,22 @@
   <div>
 
     <div class="registerForm">
-      <h1 class="register">Register</h1>
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-        <b-form-group id="email" label="Email address:" label-for="email" description="We'll never share your email with anyone else.">
-          <b-form-input id="exampleInput1" type="email" v-model="form.email" required placeholder="Enter email">
+      <h1 class="registerHeader">Register</h1>
+      <b-form>
+        <b-form-group id="emailLabel" label="Email address:" label-for="email" description="We'll never share your email with anyone else.">
+          <b-form-input id="email" type="email" v-model="register.email" required placeholder="Enter email">
           </b-form-input>
         </b-form-group>
-        <b-form-group id="exampleInputGroup2" label="Your Name:" label-for="exampleInput2">
-          <b-form-input id="exampleInput2" type="text" v-model="form.name" required placeholder="Enter name">
+        <b-form-group id="nameLabel" label="Your Name:" label-for="exampleInput2">
+          <b-form-input id="name" type="text" v-model="register.name" required placeholder="Enter name">
           </b-form-input>
         </b-form-group>
-        <b-form-group id="password" label="Password:" label-for="password">
-          <b-form-input id="exampleInput2" type="text" v-model="form.password" required placeholder="Enter password">
+        <b-form-group id="passwordLabel" label="Password:" label-for="password">
+          <b-form-input id="password" type="text" v-model="register.password" required placeholder="Enter password">
           </b-form-input>
         </b-form-group>
-        <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button>
+        <b-button type="submit" @click="register" variant="primary">Submit</b-button>
+        <b-button type="reset" @click="reset" variant="danger">Reset</b-button>
       </b-form>
     </div>
 
@@ -26,7 +26,7 @@
 </template>
 
 <style scoped>
-  .register {
+  .registerHeader {
     padding: 30px;
     text-align: center;
   }
@@ -41,39 +41,22 @@
   export default {
     data() {
       return {
-        form: {
+        register: {
           email: '',
           name: '',
-          food: null,
-          checked: []
+          password: ''
         },
-        foods: [{
-            text: 'Select One',
-            value: null
-          },
-          'Carrots', 'Beans', 'Tomatoes', 'Corn'
-        ],
         show: true
       }
     },
     methods: {
-      onSubmit(evt) {
-        evt.preventDefault();
-        alert(JSON.stringify(this.form));
+      register() {
+          axios.post('');
       },
-      onReset(evt) {
-        evt.preventDefault();
-        /* Reset our form values */
+      reset() {
         this.form.email = '';
         this.form.name = '';
         this.form.password = '';
-
-        /* Trick to reset/clear native browser form validation state */
-        this.show = false;
-        this.$nextTick(() => {
-          this.show = true
-        });
-        
       }
     }
   }
