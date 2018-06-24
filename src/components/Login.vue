@@ -2,19 +2,22 @@
   <div>
 
     <div class="loginForm">
-      <h1 class="login">Login</h1>
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-        <b-form-group id="email" label="Email address:" label-for="email" description="">
-          <b-form-input id="email" type="email" v-model="form.email" required placeholder="Enter email">
-          </b-form-input>
-        </b-form-group>
-        <b-form-group id="password" label="Password:" label-for="password">
-          <b-form-input id="password" type="text" v-model="form.password" required placeholder="Enter password">
-          </b-form-input>
-        </b-form-group>
-        <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button>
-      </b-form>
+      <h1 class="loginHeader">Login</h1>
+      <v-form v-model="valid" ref="form" lazy-validation>
+        <v-text-field v-model="email" :rules="emailRules" label="Email" required></v-text-field>
+        <v-text-field v-model="password" :rules="passwordRules" label="Password" required></v-text-field>
+        <v-btn @click="submit" :disabled="!valid">Submit</v-btn>
+        <v-btn @click="clear">Clear</v-btn>
+        <v-alert :value="logSuc" type="success">
+          Login Successful
+        </v-alert>
+        <v-alert :value="logFail" type="error">
+          Login Error {{ msg }}
+        </v-alert>
+        <v-alert :value="invForm" type="error">
+          Invalid Form
+        </v-alert>
+      </v-form>
     </div>
 
   </div>
@@ -22,48 +25,73 @@
 </template>
 
 <style scoped>
-  .login {
+  .loginHeader {
     padding: 30px;
     text-align: center;
   }
 
   .loginForm {
+      margin: auto;
+      width: 80%;
       padding: 30px;
   }
 
 </style>
 
 <script>
+import axios from 'axios';
   export default {
-    data() {
-      return {
-        form: {
-          email: '',
-          name: '',
-          food: null,
-          checked: []
-        },
-        show: true
-      }
-    },
+    data: () => ({
+      valid: true,
+      logSuc: false,
+      logFail: false,
+      invForm: false,
+      msg: '',
+      email: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+      ],
+      password: '',
+      passwordRules: [
+        v => !!v || 'Password is required',
+      ],
+      confirm_password: '',
+    }),
     methods: {
-      onSubmit(evt) {
-        evt.preventDefault();
-        alert(JSON.stringify(this.form));
+      submit () {
+        if (this.$refs.form.validate()) {
+          return axios ({
+            method: 'post',
+            data: {
+              email: this.email,
+              password: this.password
+            },
+            url: 'http://localhost:8081/users/login',
+            headers: {
+              'Content-type': 'application/json',
+            },
+          })
+          .then((response) => {
+            window.localStorage.setItem('auth', response.data.token);
+            this.logSuc = true;
+            const self = this;
+            setTimeout(function() {
+              self.$router.push({ name: 'Home' })
+            }, 2000);
+            
+          })
+          .catch((error) => {
+            //const msg = error.response.data.message;
+            const msg = error;
+            this.logFail = true;
+          })
+        } else {
+          this.invForm = true;
+        }
       },
-      onReset(evt) {
-        evt.preventDefault();
-        /* Reset our form values */
-        this.form.email = '';
-        this.form.name = '';
-        this.form.password = '';
-
-        /* Trick to reset/clear native browser form validation state */
-        this.show = false;
-        this.$nextTick(() => {
-          this.show = true
-        });
-        
+      clear() {
+        this.$refs.form.reset()
       }
     }
   }

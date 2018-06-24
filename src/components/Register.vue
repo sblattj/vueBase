@@ -14,7 +14,10 @@
           Registration Successful
         </v-alert>
         <v-alert :value="regFail" type="error">
-          Registration Error {{ msg }}
+          Registration Error
+        </v-alert>
+        <v-alert :value="invForm" type="error">
+          Invalid Form
         </v-alert>
       </v-form>
     </div>
@@ -44,7 +47,7 @@ import axios from 'axios';
       valid: true,
       regSuc: false,
       regFail: false,
-      msg: '',
+      invForm: false,
       email: '',
       name: '',
       nameRules: [
@@ -64,9 +67,7 @@ import axios from 'axios';
     }),
     methods: {
       submit () {
-        alert("clicked");
         if (this.$refs.form.validate()) {
-          alert("clicked2");
           return axios ({
             data: {
               name: this.name,
@@ -83,14 +84,15 @@ import axios from 'axios';
             this.regSuc = true;
             const self = this;
             setTimeout(function() {
-              self.$router.push({ name: 'Home' })
+              self.$router.push({ name: 'Login' })
             }, 2000);
             
           })
           .catch((error) => {
-            //const msg = error.response.data.message;
             this.regFail = true;
           })
+        } else {
+          this.invForm = true;
         }
       },
       clear() {
