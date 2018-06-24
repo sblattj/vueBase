@@ -18,6 +18,7 @@
       
         <b-navbar-nav class="ml-auto">
           <b-nav-item href="#/login">Log In</b-nav-item>
+          <!-- <b-nav-item v-else href="#/logout">Log Out</b-nav-item> -->
           <b-nav-item href="#/register">Register</b-nav-item>
         </b-navbar-nav>
 
@@ -45,6 +46,7 @@
   export default {
     name: 'App'
   }
+
 
 </script>
 
