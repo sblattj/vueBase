@@ -2,7 +2,7 @@
   <div id="app">
     <!-- <p>hello from app.vue above router-view</p> -->
     <!-- lets inject navbar here -->
-    <b-navbar toggleable="sm" type="light" variant="info">
+    <b-navbar toggleable="sm" type="dark" variant="info">
 
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
@@ -17,14 +17,16 @@
 
       
         <b-navbar-nav class="ml-auto">
-          <b-nav-item href="#/login">Log In</b-nav-item>
-          <!-- <b-nav-item v-else href="#/logout">Log Out</b-nav-item> -->
-          <b-nav-item href="#/register">Register</b-nav-item>
+          <b-nav-item v-if="!isLoggedIn" href="#/login">Log In</b-nav-item>
+          <b-nav-item v-if="!isLoggedIn" href="#/register">Register</b-nav-item>
+          <b-nav-item v-else @click="logOut">Log Out</b-nav-item>
         </b-navbar-nav>
+        
 
 
       </b-collapse>
     </b-navbar>
+    <b-alert show v-if="alreadyLoggedOut" variant="warning">Already Logged Out</b-alert>
 
     
     <!-- this routerview injects other components as children -->
@@ -44,7 +46,31 @@
 
 <script>
   export default {
-    name: 'App'
+    name: 'App',
+    data: () => ({
+      isLoggedIn: false,
+      alreadyLoggedOut: false
+    }),
+    methods: {
+      logOut () {
+        if (window.localStorage.getItem('auth') != null) {
+          window.localStorage.removeItem('auth');
+          this.$forceUpdate();
+        } else {
+            this.alreadyLoggedOut = true;
+        }
+      },
+      getLogStatus () {
+        if (window.localStorage.getItem('auth') == null) {
+          this.isLoggedIn = false;
+        } else {
+          this.isLoggedIn = true;
+        }
+      }
+    },
+    beforeUpdate () {
+      this.getLogStatus();
+    }
   }
 
 

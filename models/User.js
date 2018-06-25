@@ -28,6 +28,10 @@ module.exports.getUserByEmail = (email, callback) => {
     User.findOne(query, callback);
 };
 
+module.exports.getUserByToken = (token, callback) => {
+    // User.findById(req.accessToken)
+}
+
 module.exports.comparePassword = (candidatePwd, hash, callback) => {
     bcryptjs.compare(candidatePwd, hash, (err, isMatch) => {
         if (err) throw err;

@@ -9,6 +9,12 @@ jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
 jwtOptions.secretOrKey= 'thisisthesecretkey';
 
 module.exports.controller = (app) => {
+
+    //get a user by token
+    app.get('users/getByToken', (req, res) => {
+        // const name
+    })
+
     //register a user
     app.post('/users/register', (req, res) => {
         const name = req.body.name;
