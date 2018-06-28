@@ -45,6 +45,7 @@
 </template>
 
 <script>
+//change to passport
   export default {
     name: 'App',
     data: () => ({
@@ -66,13 +67,18 @@
         } else {
           this.isLoggedIn = true;
         }
+      },
+      getCurrentUser () {
+        const token = window.localStorage.getItem('auth');
+        return axios ({
+          
+        })
       }
     },
     beforeUpdate () {
       this.getLogStatus();
     }
   }
-
 
 </script>
 
