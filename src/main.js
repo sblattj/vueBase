@@ -3,15 +3,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import Vue from 'vue';
+import './plugins/vuetify'
 import BootstrapVue from 'bootstrap-vue';
-import Vuetify from 'vuetify';
 import App from './App';
 import router from './router';
 import axios from 'axios';
-// import '../node_modules/vuetify/dist/vuetify.min.css';
 
 Vue.use(BootstrapVue);
-Vue.use(Vuetify);
 
 Vue.config.productionTip = false;
 
