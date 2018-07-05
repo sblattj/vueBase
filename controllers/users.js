@@ -12,7 +12,7 @@ module.exports.controller = (app) => {
 
     //get a user by token
     app.get('users/getByToken', (req, res) => {
-        // const name
+       
     })
 
     //register a user
@@ -30,14 +30,7 @@ module.exports.controller = (app) => {
             res.send({ user });
         });
     });
-    // User.createUser(newUser, (error, user) => {
-    //     if (error) {
-    //         res.status(422).json({
-    //             message: 'error 422: try again later',
-    //         });
-    //     }
-    //     res.send({ user });
-    // });
+    
     //login a user
     app.post('/users/login', (req, res) => {
         if (req.body.email && req.body.password) {
