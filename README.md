@@ -3,8 +3,9 @@
 > Easily get started with the MEVN stack using this boilerplate
 
 ## Clone
-
-This repo
+```
+git clone https://github.com/sblattj/vueBase.git
+```
 
 ## Change directory into vueBase
 ```
