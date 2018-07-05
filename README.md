@@ -1,21 +1,38 @@
-# vue-boilerplate
+# vueBase
 
-> A starter for Vuejs
+> Easily get started with the MEVN stack using this boilerplate
 
-## Build Setup
+## Clone
 
-``` bash
-# install dependencies
-npm install
+This repo
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+## Change directory into vueBase
+```
+cd vueBase
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Start a local MongoDB instance (Tab)
+```
+mongod
+```
+
+## Start the server using nodemon
+```
+nodemon server.js
+```
+
+## Run
+```
+npm install && npm run dev
+
+```
+
+## Config defaults
+```
+Server: localhost:8081
+Client: localhost:8080
+MongoDB: localhost:27017
+```
+
+## Thanks
+Aneeta Sharma
