@@ -12,7 +12,7 @@ git clone https://github.com/sblattj/vueBase.git
 cd vueBase
 ```
 
-## Start a local MongoDB instance (Tab)
+## Start a local MongoDB instance
 ```
 mongod
 ```

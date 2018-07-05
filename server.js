@@ -16,7 +16,7 @@ app.use(cors());
 
 //connect to mongodb
 mongoose.connect('mongodb://localhost/vueBase', function() {
-  console.log('Connection has been made');
+  console.log('Successfully connected to database');
 })
 .catch(err => {
   console.error('App starting error:', err.stack);
