@@ -83,6 +83,7 @@
 </script>
 
 <style scoped>
+
   html {
     height: 100%;
   }
@@ -98,11 +99,11 @@
     position: fixed;
     background: darkcyan;
     color: white;
-    padding: 1px;
+    padding: 0px;
     left: 0;
     right: 0;
     bottom: 0;
-    height: 100px;
+    height: 50px;
   }
 
 </style>
