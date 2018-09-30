@@ -1,4 +1,5 @@
 const User = require ('../models/User.js');
+const Post = require ('../models/Post.js');
 
 const passportJWT = require('passport-jwt');
 const jwt = require('jsonwebtoken');
@@ -29,6 +30,11 @@ module.exports.controller = (app) => {
             if (error) { console.log(error); }
             res.send({ user });
         });
+    });
+
+    //make post
+    app.post('/users/post', (req, res) => {
+        // const 
     });
     
     //login a user
